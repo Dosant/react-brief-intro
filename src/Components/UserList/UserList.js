@@ -11,7 +11,7 @@ class UserList extends Component {
 						<th>Age</th>
 						<th>Phone</th>
 					</tr>
-					{this.props.users.map((user) => <UserListItem key={user.id} user={user} />)}
+					{this.props.users.map((user) => <UserListItem key={user.id} user={user} selectUser={this.props.selectUser}/>)}
 				</tbody>
 
 			</table>
