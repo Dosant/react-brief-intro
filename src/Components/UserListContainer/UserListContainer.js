@@ -15,22 +15,13 @@ class UserListContainer extends Component {
 	handeSearchInput(evt) {
 		const searchQuery = evt.target.value;
 		this.setState({
-			...this.state,
 			searchQuery
 		})
 	}
 
-	handleSortChangeName() {
+	handleSortChange(sortField) {
 		this.setState({
-			...this.state,
-			sortField:'name'
-		});
-	}
-
-	handleSortChangeAge() {
-		this.setState({
-			...this.state,
-			sortField:'age'
+			sortField
 		});
 	}
 
@@ -64,8 +55,8 @@ class UserListContainer extends Component {
 						<input type="text" className="form-control" placeholder="Filter By Name" value={this.state.searchQuery} onChange={this.handeSearchInput.bind(this)}/>
 					</div>
 					<div className='col-xs-6'>
-						<button className='btn btn-default' onClick={this.handleSortChangeName.bind(this)}>Sort By Name</button>
-						<button className='btn btn-default' onClick={this.handleSortChangeAge.bind(this)}>Sort By Age</button>
+						<button className='btn btn-default' onClick={() => this.handleSortChange('name')}>Sort By Name</button>
+						<button className='btn btn-default' onClick={() => this.handleSortChange('age')}>Sort By Age</button>
 					</div>
 				</div>
 				<UserList users={this.renderUsers(this.props.users)} selectUser={this.props.selectUser}/>
