@@ -1,3 +1,5 @@
+# [Slides](https://docs.google.com/a/exadel.com/presentation/d/1reMpFNcFIBYSBxVheIt3aGFYuN24V_hmyvgRpO1mWP4/edit?usp=sharing)
+
 # What is React?
 
 React is a JavaScript tool that makes it easy to reason about, construct, and maintain stateless and stateful user interfaces. It provides the means to declaratively define and divide a UI into UI components (a.k.a., React components) using HTML-like nodes called React nodes. React nodes eventually get transformed into a format for UI rendering (e.g., HTML/DOM, canvas, svg, etc...).
