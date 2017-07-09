@@ -31,8 +31,9 @@ You should learn, in this order, without skipping ahead or learning concurrently
 # React
 No JSX. No ES6. No transpilation. Just pure component-oriented pleasure of coding.
 
-* [Playground](https://jsfiddle.net/av5ef84z/)
+* [Playground](https://jsbin.com/dozices/1/edit?html,js,output)
 * [Top-Level API DOCS](https://facebook.github.io/react/docs/top-level-api.html)
+* [React without JSX](https://facebook.github.io/react/docs/react-without-jsx.html)
 
 ## My First Component!
 
@@ -153,7 +154,7 @@ With JSX this becomes:
 
 *Still Note: JSX is not required to use React*.
 
-[Check out our playground with JSX](https://jsfiddle.net/pa600ydg/)
+[Check out our playground with JSX](https://jsbin.com/sesobom/2/edit?html,css,js,output)
 
 # React Demo App — News App
 Now let’s actually develop an app. 
@@ -166,18 +167,18 @@ Imagine that we already have a JSON API and a mock from our designer. Our design
 The JSON API returns some data that looks like this:
 
 ```
-	{
-    id: 'rossiya-snimet-zapret-na-import-moldavskih-vin',
-    title: 'Россия снимет запрет на импорт молдавских вин',
-    author: 'sports',
-    createdAt: '2017-02-28T05:24:23.856Z',
-    content: `<div class="Body">
+{
+    "id": "rossiya-snimet-zapret-na-import-moldavskih-vin",
+    "title": "Россия снимет запрет на импорт молдавских вин",
+    "author": "sports",
+    "createdAt": "2017-02-28T05:24:23.856Z",
+    "content": "<div class=\"Body\">
              <p>Запрет на&nbsp;импорт молдавских вин в&nbsp;Россию, действующий с&nbsp;сентября 2013 года, в&nbsp;ближайшее время будет снят еще с&nbsp;нескольких предприятий. Об&nbsp;этом объявила глава Роспотребнадзора Анна Попова по&nbsp;итогам проверки российским специалистами молдавских винодельческих предприятий.</p>
 <p>Эксперты Роспотребнадзора, сообщила Попова, проверили 13 молдавских предприятий. Большинство из&nbsp;них, по&nbsp;словам главы Роспотребнадзора, смогут поставлять свою продукцию на&nbsp;российский рынок.</p>
-<p>С&nbsp;2015 года поставки вин на&nbsp;российский рынок <a href="http://tass.ru/ekonomika/2171763" target="_blank">были разрешены</a> нескольким молдавским предприятиям, однако целиком запрет пока не&nbsp;снят.</p>
-           </div>`,
-    summary:
-      'Запрет на импорт молдавских вин в Россию, действующий с сентября 2013 года, в ближайшее время будет снят еще с нескольких предприятий. '
+<p>С&nbsp;2015 года поставки вин на&nbsp;российский рынок <a href=\"http://tass.ru/ekonomika/2171763\" target="_blank">были разрешены</a> нескольким молдавским предприятиям, однако целиком запрет пока не&nbsp;снят.</p>
+           </div>",
+   	"summary":
+      "Запрет на импорт молдавских вин в Россию, действующий с сентября 2013 года, в ближайшее время будет снят еще с нескольких предприятий. "
   },
 ```
 
