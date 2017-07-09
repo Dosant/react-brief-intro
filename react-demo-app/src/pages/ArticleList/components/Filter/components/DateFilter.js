@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+// Homework ... 
+
 class DateFilter extends Component {
   render() {
     return (
@@ -8,6 +10,7 @@ class DateFilter extends Component {
         <input name="date-from" type="date" />
         <span>до:</span>
         <input name="date-to" type="date" />
+        <code> // не работает :) </code>
       </div>
     );
   }

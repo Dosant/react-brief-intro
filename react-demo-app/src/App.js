@@ -9,7 +9,7 @@ class App extends Component {
       <div className="App">
         <Header />
         <div className="content">
-          <ArticleListPage articles={this.props.articles} authors={this.props.authors}/>
+          <ArticleListPage />
         </div>
         <Footer />
       </div>
