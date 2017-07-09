@@ -4,4 +4,6 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+import { getArticles, getAuthors } from './services/data';
+
+ReactDOM.render(<App articles={getArticles()} authors={getAuthors()} />, document.getElementById('root'));
