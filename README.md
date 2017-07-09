@@ -261,8 +261,8 @@ If you have a looot of time and hardly fall asleep, great series of video course
 
 When you ready to try **REDUX**, everything you will need is here. Free, from creator of Redux:
 
-*[Getting Started with Redux](https://egghead.io/courses/getting-started-with-redux)
-*[Building React Applications with Idiomatic Redux](https://egghead.io/courses/building-react-applications-with-idiomatic-redux)
+* [Getting Started with Redux](https://egghead.io/courses/getting-started-with-redux)
+* [Building React Applications with Idiomatic Redux](https://egghead.io/courses/building-react-applications-with-idiomatic-redux)
 
 
 

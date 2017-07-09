@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="./styles.css">
+</head>
+
+<body>
+    <div class="header">
+        <div class="logo">
+            Logo
+        </div>
+    </div>
+    <div class="content">
+        <div class="filter-bar">
+            <form name="filter">
+                <div class="filter-item filter-date">Фильтр по дате: от: <input name="date-from" type="date" /> до: <input name="date-to" type="date" /></div>
+                <div class="filter-item filter-author">Фильтр по автору:
+                    <!-- Тут хардкод. По заданию вам надо из javascript наполнять <select> Пример: http://learn.javascript.ru/form-elements#добавьте-опцию-к-селекту -->
+                    <select name="author">
+                        <option value="all" selected>Все</option>
+                        <option value="meduza">Meduza</option>
+                        <option value="ria">Риа Новости</option>
+                        <option value="sports">Sports.ru</option>
+                    </select>
+                </div>
+                <input name="submit" type="button" value="Применить"></input>
+            </form>
+        </div>
+        <div class="article-list">
+        </div>
+        <div class="pagination-bar">
+            <button id="pagination-show-more">Показать ещё</button>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="footer-content">
+            Автор: Досов Антон
+        </div>
+    </div>
+    <!-- templates -->
+    <template id="template-article-list-item">
+        <div class="article-list-item" data-id="id">
+            <h3 class="article-list-item-title">
+                Заголовок статьи
+            </h3>
+            <p class="article-list-item-summary">
+                Краткое описание для статьи. Тут краткое описание
+            </p>
+            <div class="article-list-item-meta">
+                <span>Автор: <span class="article-list-item-author">Досов Антон</span></span>
+                <span>Опубликована: <span class="article-list-item-date">12.12.1995 04:35</span></span>
+            </div>
+        </div>
+    </template>
+    <!-- scripts -->
+    <script src="index.js" type="text/javascript"></script>
+</body>
+
+</html>
