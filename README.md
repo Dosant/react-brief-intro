@@ -2,7 +2,8 @@
 
 React is a JavaScript tool that makes it easy to reason about, construct, and maintain stateless and stateful user interfaces. It provides the means to declaratively define and divide a UI into UI components (a.k.a., React components) using HTML-like nodes called React nodes. React nodes eventually get transformed into a format for UI rendering (e.g., HTML/DOM, canvas, svg, etc...).
 
-*Summary*
+## Summary
+
 **What**
 * React is a JavaScript library for creating user interfaces
 * React is a VIEW Layer
@@ -25,13 +26,13 @@ You should learn, in this order, without skipping ahead or learning concurrently
 * **JavaScript “bundlers**”
 * **ES6**
 * Routing
-* Flux / Redux
+* Redux
 
 # React
 No JSX. No ES6. No transpilation. Just pure component-oriented pleasure of coding.
 
-[Playground](https://jsfiddle.net/av5ef84z/)
-[Top-Level API DOCS](https://facebook.github.io/react/docs/top-level-api.html)
+* [Playground](https://jsfiddle.net/av5ef84z/)
+* [Top-Level API DOCS](https://facebook.github.io/react/docs/top-level-api.html)
 
 ## My First Component!
 
@@ -203,19 +204,22 @@ Most of your components should simply take some data from props and render it. H
 
 Try to keep as many of your components as possible stateless. By doing this you'll isolate the state to its most logical place and minimize redundancy, making it easier to reason about your application.
 
-So we have:
+We have:
+
 	* The original list of users
 	* Current Selected User
 	* The value in SearchBar
 	* Current Sort Option (name / age / none)
 	* mutated list of users
 
-So we should ask 3Q’s on every data item:
+We should ask 3Q’s on every data item:
+
 1. Is it passed in from a parent via props? If so, it probably isn't state.
 2. Does it remain unchanged over time? If so, it probably isn't state.
 3. Can you compute it based on any other state or props in your component? If so, it isn't state.
 
 So finally the state is:
+
 	* Current Selected User
 	* The value in SearchBar
 	* Current Sort Option (name / age / none)
@@ -224,6 +228,7 @@ So finally the state is:
 Remember: React is all about one-way data flow down the component hierarchy. It may not be immediately clear which component should own what state. This is often the most challenging part for newcomers to understand, so follow these steps to figure it out:
 
 For each piece of state in your application:
+
 * Identify every component that renders something based on that state.
 * Find a common owner component (a single component above all the components that need the state in the hierarchy).
 * Either the common owner or another component higher up in the hierarchy should own the state.
@@ -246,7 +251,8 @@ Hopefully, this gives you an idea of how to think about building components and 
 
 * [Book: React Enlightment](http://www.reactenlightenment.com/what-is-react.html)
 
-Video Course
+Video Courses:
+
 * [Complete Introduction to React (feat. Redux and React Router) by Frontend Masters](https://frontendmasters.com/courses/react-intro/?u=f69852f549bcd4edc732fa04a440a36b677112b6) — great workshop
 
 If you have a looot of time and hardly fall asleep, great series of video courses on udemy:
@@ -254,6 +260,7 @@ If you have a looot of time and hardly fall asleep, great series of video course
 * [Advanced React and Redux](https://www.udemy.com/react-redux-tutorial)
 
 When you ready to try **REDUX**, everything you will need is here. Free, from creator of Redux:
+
 *[Getting Started with Redux](https://egghead.io/courses/getting-started-with-redux)
 *[Building React Applications with Idiomatic Redux](https://egghead.io/courses/building-react-applications-with-idiomatic-redux)
 
