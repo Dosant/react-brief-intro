@@ -31,8 +31,9 @@ You should learn, in this order, without skipping ahead or learning concurrently
 # React
 No JSX. No ES6. No transpilation. Just pure component-oriented pleasure of coding.
 
-* [Playground](https://jsfiddle.net/av5ef84z/)
+* [Playground](https://jsbin.com/dozices/1/edit?html,js,output)
 * [Top-Level API DOCS](https://facebook.github.io/react/docs/top-level-api.html)
+* [React without JSX](https://facebook.github.io/react/docs/react-without-jsx.html)
 
 ## My First Component!
 
@@ -153,46 +154,53 @@ With JSX this becomes:
 
 *Still Note: JSX is not required to use React*.
 
-[Check out our playground with JSX](https://jsfiddle.net/pa600ydg/)
+[Check out our playground with JSX](https://jsbin.com/sesobom/2/edit?html,css,js,output)
 
-# React Demo App — Sorting & Filtering List Of Data
-Now let’s actually develop an app. It will display data in the table, by clicking on item it will be displayed in Details View. We will be able to filter and sort the table.
-
-
-[Let’s start with the mock.](https://www.dropbox.com/s/i289p4olquf8phg/ReactSort%26FilterMock.png?dl=0)
+# React Demo App — News App
+Now let’s actually develop an app. 
+This would be a news list. User can paginate and filter the list.
+This is a simple version of an App implemented during the internship.
 
 Imagine that we already have a JSON API and a mock from our designer. Our designer apparently isn't very good because the mock looks like this:
-[Click!](https://www.dropbox.com/s/i289p4olquf8phg/ReactSort%26FilterMock.png?dl=0)
+![Let’s start with the mock.](https://d26dzxoao6i3hh.cloudfront.net/items/3X2F0N2H2Y3b310I1r1g/Снимок%20экрана%202017-07-09%20в%2011.45.03.png "The App UI")
 
-Our JSON API returns some data that looks like this:
+The JSON API returns some data that looks like this:
+
 ```
-	{
-	  "id": 0,
-	  "name": "Chad Snyder",
-	  "age": 28,
-	  "phone": "(629) 653-9041",
-	  "image": "owl",
-	  "phrase": "Owmeco jen be tezpoksim vojuz..."
-	}
+{
+    "id": "rossiya-snimet-zapret-na-import-moldavskih-vin",
+    "title": "Россия снимет запрет на импорт молдавских вин",
+    "author": "sports",
+    "createdAt": "2017-02-28T05:24:23.856Z",
+    "content": "<div class=\"Body\">
+             <p>Запрет на&nbsp;импорт молдавских вин в&nbsp;Россию, действующий с&nbsp;сентября 2013 года, в&nbsp;ближайшее время будет снят еще с&nbsp;нескольких предприятий. Об&nbsp;этом объявила глава Роспотребнадзора Анна Попова по&nbsp;итогам проверки российским специалистами молдавских винодельческих предприятий.</p>
+<p>Эксперты Роспотребнадзора, сообщила Попова, проверили 13 молдавских предприятий. Большинство из&nbsp;них, по&nbsp;словам главы Роспотребнадзора, смогут поставлять свою продукцию на&nbsp;российский рынок.</p>
+<p>С&nbsp;2015 года поставки вин на&nbsp;российский рынок <a href=\"http://tass.ru/ekonomika/2171763\" target="_blank">были разрешены</a> нескольким молдавским предприятиям, однако целиком запрет пока не&nbsp;снят.</p>
+           </div>",
+   	"summary":
+      "Запрет на импорт молдавских вин в Россию, действующий с сентября 2013 года, в ближайшее время будет снят еще с нескольких предприятий. "
+  },
 ```
 
 ## Step 1: Break the UI into a component hierarchy
 But how do you know what should be its own component? Just use the same techniques for deciding if you should create a new function or object. One such technique is the single responsibility principle, that is, **a component should ideally only do one thing**. If it ends up growing, it should be decomposed into smaller subcomponents.
 
-Consider following proposal: [Link](https://www.dropbox.com/s/kegyqdc4v6v9kia/ReactSort%26FilterMockUpComponents.png?dl=0)
+Consider following proposal: 
+![Split UI into Components](https://cl.ly/0J0z14370u44/[8e4c513c8b7ae7edca99a5a3758c8657]_%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA%20%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0%202017-07-09%20%D0%B2%2011.50.14.png "Split UI")
 
-* Header  (RED)
-* Content  (ORANGE)
-	* User Details  (GREEN)
-	* User List Container (GREEN)
-		* SearchBar (YELLOW)
-		* SortBar  (YELLOW)
-		* User List (BLUE)
-			* User (AQUA)
-			* User (AQUA)
-			* …
+* React App
+  * Header
+  * Content (ArticleListPage)
+     * Filter
+     * ArticleList
+         * ArticleListItem
+         * ArticleListItem
+         *  ...
+     * Pagination
+ * Footer 
+
 ## Step 2: Build a static version in React
-Let’s use official officially supported way to create single-page React applications. [Create React App](https://github.com/facebookincubator/create-react-app). It offers a modern build setup with no configuration. Will handle bundling and transpilation.
+Let’s use official officially supported way to create single-page React applications. [Create React App](https://github.com/facebookincubator/create-react-app). It offers a modern build setup with no configuration. It Will handle bundling and transpilation.
 
 Let’s start to build a version that takes our data model and renders the UI but has no interactivity.
 
@@ -204,25 +212,20 @@ Most of your components should simply take some data from props and render it. H
 
 Try to keep as many of your components as possible stateless. By doing this you'll isolate the state to its most logical place and minimize redundancy, making it easier to reason about your application.
 
-We have:
-
-	* The original list of users
-	* Current Selected User
-	* The value in SearchBar
-	* Current Sort Option (name / age / none)
-	* mutated list of users
-
 We should ask 3Q’s on every data item:
 
 1. Is it passed in from a parent via props? If so, it probably isn't state.
 2. Does it remain unchanged over time? If so, it probably isn't state.
 3. Can you compute it based on any other state or props in your component? If so, it isn't state.
 
-So finally the state is:
+The states for **Article List** route would be:
 
-	* Current Selected User
-	* The value in SearchBar
-	* Current Sort Option (name / age / none)
+	* The articles retrieved with current filter
+	* Applied FilterConfig 
+	* The filterConfig in Filter Component. Not applied
+	* The PaginationConfig
+	* For each article - is it expanded or nor
+
 
 ## Step 4: Identify where your state should live
 Remember: React is all about one-way data flow down the component hierarchy. It may not be immediately clear which component should own what state. This is often the most challenging part for newcomers to understand, so follow these steps to figure it out:
@@ -235,11 +238,11 @@ For each piece of state in your application:
 * If you can't find a component where it makes sense to own the state, create a new component simply for holding the state and add it somewhere in the hierarchy above the common owner component.
 
 In our case:
-* `UserDetails` needs currentUser, that’s why we have `UserConatainer` to handle it
-* `UserList` will get mutated list of users. `UserListContainer` will track the state of filter query and current sort option.
+
+* `ArticleList` will get current article list with applied filters. `ArticleListPage` will track the state of filter and page configs.
 
 ## Step 5: Add inverse data flow
-So far, we've built an app that renders correctly as a function of props and state flowing down the hierarchy. Now it's time to support data flowing the other way: the form components need to update the state in UserListContainer.
+So far, we've built an app that renders correctly as a function of props and state flowing down the hierarchy. Now it's time to support data flowing the other way: the form components need to update the state in`ArticleListPage `.
 
 ## And that's it
 Hopefully, this gives you an idea of how to think about building components and applications with React. While it may be a little more typing than you're used to, remember that code is read far more than it's written, and it's extremely easy to read this modular, explicit code. As you start to build large libraries of components, you'll appreciate this explicitness and modularity, and with code reuse, your lines of code will start to shrink. :)
