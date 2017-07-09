@@ -155,44 +155,51 @@ With JSX this becomes:
 
 [Check out our playground with JSX](https://jsfiddle.net/pa600ydg/)
 
-# React Demo App — Sorting & Filtering List Of Data
-Now let’s actually develop an app. It will display data in the table, by clicking on item it will be displayed in Details View. We will be able to filter and sort the table.
-
-
-[Let’s start with the mock.](https://www.dropbox.com/s/i289p4olquf8phg/ReactSort%26FilterMock.png?dl=0)
+# React Demo App — News App
+Now let’s actually develop an app. 
+This would be a news list. User can paginate and filter the list.
+This is a simple version of an App implemented during the internship.
 
 Imagine that we already have a JSON API and a mock from our designer. Our designer apparently isn't very good because the mock looks like this:
-[Click!](https://www.dropbox.com/s/i289p4olquf8phg/ReactSort%26FilterMock.png?dl=0)
+![Let’s start with the mock.](https://d26dzxoao6i3hh.cloudfront.net/items/3X2F0N2H2Y3b310I1r1g/Снимок%20экрана%202017-07-09%20в%2011.45.03.png "The App UI")
 
-Our JSON API returns some data that looks like this:
+The JSON API returns some data that looks like this:
+
 ```
 	{
-	  "id": 0,
-	  "name": "Chad Snyder",
-	  "age": 28,
-	  "phone": "(629) 653-9041",
-	  "image": "owl",
-	  "phrase": "Owmeco jen be tezpoksim vojuz..."
-	}
+    id: 'rossiya-snimet-zapret-na-import-moldavskih-vin',
+    title: 'Россия снимет запрет на импорт молдавских вин',
+    author: 'sports',
+    createdAt: '2017-02-28T05:24:23.856Z',
+    content: `<div class="Body">
+             <p>Запрет на&nbsp;импорт молдавских вин в&nbsp;Россию, действующий с&nbsp;сентября 2013 года, в&nbsp;ближайшее время будет снят еще с&nbsp;нескольких предприятий. Об&nbsp;этом объявила глава Роспотребнадзора Анна Попова по&nbsp;итогам проверки российским специалистами молдавских винодельческих предприятий.</p>
+<p>Эксперты Роспотребнадзора, сообщила Попова, проверили 13 молдавских предприятий. Большинство из&nbsp;них, по&nbsp;словам главы Роспотребнадзора, смогут поставлять свою продукцию на&nbsp;российский рынок.</p>
+<p>С&nbsp;2015 года поставки вин на&nbsp;российский рынок <a href="http://tass.ru/ekonomika/2171763" target="_blank">были разрешены</a> нескольким молдавским предприятиям, однако целиком запрет пока не&nbsp;снят.</p>
+           </div>`,
+    summary:
+      'Запрет на импорт молдавских вин в Россию, действующий с сентября 2013 года, в ближайшее время будет снят еще с нескольких предприятий. '
+  },
 ```
 
 ## Step 1: Break the UI into a component hierarchy
 But how do you know what should be its own component? Just use the same techniques for deciding if you should create a new function or object. One such technique is the single responsibility principle, that is, **a component should ideally only do one thing**. If it ends up growing, it should be decomposed into smaller subcomponents.
 
-Consider following proposal: [Link](https://www.dropbox.com/s/kegyqdc4v6v9kia/ReactSort%26FilterMockUpComponents.png?dl=0)
+Consider following proposal: 
+![Split UI into Components](https://cl.ly/0J0z14370u44/[8e4c513c8b7ae7edca99a5a3758c8657]_%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA%20%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0%202017-07-09%20%D0%B2%2011.50.14.png "Split UI")
 
-* Header  (RED)
-* Content  (ORANGE)
-	* User Details  (GREEN)
-	* User List Container (GREEN)
-		* SearchBar (YELLOW)
-		* SortBar  (YELLOW)
-		* User List (BLUE)
-			* User (AQUA)
-			* User (AQUA)
-			* …
+* React App
+  * Header
+  * Content (ArticleListPage)
+     * Filter
+     * ArticleList
+         * ArticleListItem
+         * ArticleListItem
+         *  ...
+     * Pagination
+ * Footer 
+
 ## Step 2: Build a static version in React
-Let’s use official officially supported way to create single-page React applications. [Create React App](https://github.com/facebookincubator/create-react-app). It offers a modern build setup with no configuration. Will handle bundling and transpilation.
+Let’s use official officially supported way to create single-page React applications. [Create React App](https://github.com/facebookincubator/create-react-app). It offers a modern build setup with no configuration. It Will handle bundling and transpilation.
 
 Let’s start to build a version that takes our data model and renders the UI but has no interactivity.
 
