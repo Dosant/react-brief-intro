@@ -212,25 +212,20 @@ Most of your components should simply take some data from props and render it. H
 
 Try to keep as many of your components as possible stateless. By doing this you'll isolate the state to its most logical place and minimize redundancy, making it easier to reason about your application.
 
-We have:
-
-	* The original list of users
-	* Current Selected User
-	* The value in SearchBar
-	* Current Sort Option (name / age / none)
-	* mutated list of users
-
 We should ask 3Q’s on every data item:
 
 1. Is it passed in from a parent via props? If so, it probably isn't state.
 2. Does it remain unchanged over time? If so, it probably isn't state.
 3. Can you compute it based on any other state or props in your component? If so, it isn't state.
 
-So finally the state is:
+The states for **Article List** route would be:
 
-	* Current Selected User
-	* The value in SearchBar
-	* Current Sort Option (name / age / none)
+	* The articles retrieved with current filter
+	* Applied FilterConfig 
+	* The filterConfig in Filter Component. Not applied
+	* The PaginationConfig
+	* For each article - is it expanded or nor
+
 
 ## Step 4: Identify where your state should live
 Remember: React is all about one-way data flow down the component hierarchy. It may not be immediately clear which component should own what state. This is often the most challenging part for newcomers to understand, so follow these steps to figure it out:
@@ -243,11 +238,11 @@ For each piece of state in your application:
 * If you can't find a component where it makes sense to own the state, create a new component simply for holding the state and add it somewhere in the hierarchy above the common owner component.
 
 In our case:
-* `UserDetails` needs currentUser, that’s why we have `UserConatainer` to handle it
-* `UserList` will get mutated list of users. `UserListContainer` will track the state of filter query and current sort option.
+
+* `ArticleList` will get current article list with applied filters. `ArticleListPage` will track the state of filter and page configs.
 
 ## Step 5: Add inverse data flow
-So far, we've built an app that renders correctly as a function of props and state flowing down the hierarchy. Now it's time to support data flowing the other way: the form components need to update the state in UserListContainer.
+So far, we've built an app that renders correctly as a function of props and state flowing down the hierarchy. Now it's time to support data flowing the other way: the form components need to update the state in`ArticleListPage `.
 
 ## And that's it
 Hopefully, this gives you an idea of how to think about building components and applications with React. While it may be a little more typing than you're used to, remember that code is read far more than it's written, and it's extremely easy to read this modular, explicit code. As you start to build large libraries of components, you'll appreciate this explicitness and modularity, and with code reuse, your lines of code will start to shrink. :)
