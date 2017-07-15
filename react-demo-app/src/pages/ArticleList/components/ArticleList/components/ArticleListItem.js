@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { shortDate } from '../../../../../utils/date';
 import RenderHtml from '../../../../../utils/renderHtml';
 
@@ -40,7 +41,7 @@ class ArticleListItem extends React.Component {
               {shortDate(article.createdAt)}
             </span>
           </span>
-        </div>
+        </div>        
         <hr />
         {this.state.isContentOpened &&
           <div className="article-list-item-content">
@@ -54,6 +55,18 @@ class ArticleListItem extends React.Component {
       </div>
     );
   }
+}
+
+ArticleListItem.propTypes = {
+  article: PropTypes.shape({
+    fake: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    summary: PropTypes.string.isRequired,
+    author: PropTypes.string.isRequired,
+    createdAt: PropTypes.instanceOf(Date),
+    content: PropTypes.string,
+  }).isRequired
 }
 
 export default ArticleListItem;
