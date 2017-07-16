@@ -1,24 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { shortDate } from '../../../../../utils/date';
-import RenderHtml from '../../../../../utils/renderHtml';
+import { Link } from 'react-router-dom';
 
 class ArticleListItem extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isContentOpened: false
-    };
-
-    this.toggleContentOpened = this.toggleContentOpened.bind(this);
-  }
-
-  toggleContentOpened() {
-    this.setState({
-      isContentOpened: !this.state.isContentOpened
-    });
-  }
-
   render() {
     const article = this.props.article;
 
@@ -41,17 +26,8 @@ class ArticleListItem extends React.Component {
               {shortDate(article.createdAt)}
             </span>
           </span>
-        </div>        
-        <hr />
-        {this.state.isContentOpened &&
-          <div className="article-list-item-content">
-            <RenderHtml html={article.content} />
-          </div>}
-        <div>
-          <button onClick={this.toggleContentOpened}>
-            {this.state.isContentOpened ? 'Скрыть' : 'Подробнее'}
-          </button>
         </div>
+        <Link to={`/article/${article.id}`}>Подробнее</Link>
       </div>
     );
   }
