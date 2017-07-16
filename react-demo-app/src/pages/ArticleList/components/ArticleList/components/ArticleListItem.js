@@ -59,7 +59,6 @@ class ArticleListItem extends React.Component {
 
 ArticleListItem.propTypes = {
   article: PropTypes.shape({
-    fake: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     summary: PropTypes.string.isRequired,

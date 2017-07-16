@@ -4,22 +4,25 @@ import { getArticles, getAuthors } from '../../services/data';
 import ArticleList from './components/ArticleList/ArticleList';
 import Filter from './components/Filter/Filter';
 import Pagination from './components/Pagination/Pagination';
+import Loader from '../../components/Loader';
 
 class ArticleListPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      isLoading: true,
       articles: [],
       authors: [],
       filterConfig: {},
       paginationConfig: {
-          skip: 0,
-          top: 3
+        skip: 0,
+        top: 3
       }
     };
 
     this.handleFilterUpdate = this.handleFilterUpdate.bind(this);
     this.handlePaginationUpdate = this.handlePaginationUpdate.bind(this);
+    this.isArticlesLoaded = this.isArticlesLoaded.bind(this);
   }
 
   componentDidMount() {
@@ -34,18 +37,24 @@ class ArticleListPage extends Component {
       this.state.filterConfig !== prevState.filterConfig ||
       this.state.paginationConfig !== prevState.paginationConfig
     ) {
-        this.reloadArticles();
+      this.reloadArticles();
     }
   }
 
   reloadArticles() {
     this.setState({
-      articles: getArticles(
-        this.state.paginationConfig.skip,
-        this.state.paginationConfig.top,
-        this.state.filterConfig
-      )
+      isLoading: true
     });
+    setTimeout(() => {
+      this.setState({
+        articles: getArticles(
+          this.state.paginationConfig.skip,
+          this.state.paginationConfig.top,
+          this.state.filterConfig
+        ),
+        isLoading: false
+      });
+    }, 1000);
   }
 
   handlePaginationUpdate(newPaginationConfig) {
@@ -60,13 +69,26 @@ class ArticleListPage extends Component {
     });
   }
 
+  isArticlesLoaded() {
+    return !this.state.isLoading
+  }
+
   render() {
     const { articles, authors } = this.state;
     return (
       <div>
-        <Filter authors={authors} config={this.state.filterConfig} onUpdate={this.handleFilterUpdate}/>
-        <ArticleList articles={articles}/>
-        <Pagination config={this.state.paginationConfig} onUpdate={ this.handlePaginationUpdate }/>
+        <Filter
+          authors={authors}
+          config={this.state.filterConfig}
+          onUpdate={this.handleFilterUpdate}
+        />
+        <Loader condition={this.isArticlesLoaded}>
+          <ArticleList articles={articles} />
+        </Loader>
+        <Pagination
+          config={this.state.paginationConfig}
+          onUpdate={this.handlePaginationUpdate}
+        />
       </div>
     );
   }
