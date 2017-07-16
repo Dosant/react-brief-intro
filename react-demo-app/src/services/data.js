@@ -153,7 +153,7 @@ const articlesStorage = [
 ];
 
 function filterArticles(articles, filterConfig) {
-  if (filterConfig && filterConfig.author) {
+  if (filterConfig && filterConfig.author && filterConfig.author !== 'all') {
     return articles.filter(function(article) {
       return filterConfig.author === article.author;
     });

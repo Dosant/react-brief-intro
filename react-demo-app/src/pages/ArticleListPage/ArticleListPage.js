@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { getArticles, getAuthors } from '../../services/data';
+import { connect } from 'react-redux';
+import { getArticles } from '../../services/data';
 
 import ArticleList from './components/ArticleList/ArticleList';
 import Filter from './components/Filter/Filter';
@@ -11,87 +12,68 @@ class ArticleListPage extends Component {
     super(props);
     this.state = {
       isLoading: true,
-      articles: [],
-      authors: [],
-      filterConfig: {},
-      paginationConfig: {
-        skip: 0,
-        top: 3
-      }
+      articles: []
     };
 
-    this.handleFilterUpdate = this.handleFilterUpdate.bind(this);
-    this.handlePaginationUpdate = this.handlePaginationUpdate.bind(this);
     this.isArticlesLoaded = this.isArticlesLoaded.bind(this);
   }
 
   componentDidMount() {
-    this.setState({
-      authors: getAuthors()
-    });
-    this.reloadArticles();
+    debugger;
+    const filterConfig = this.props.filterConfig;
+    const paginationConfig = this.props.paginationConfig;
+    this.reloadArticles(filterConfig, paginationConfig);
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (
-      this.state.filterConfig !== prevState.filterConfig ||
-      this.state.paginationConfig !== prevState.paginationConfig
-    ) {
-      this.reloadArticles();
-    }
+  componentWillReceiveProps(nextProps) {
+    const filterConfig = this.props.filterConfig;
+    const paginationConfig = this.props.paginationConfig;
+
+    const nextFilterConfig = nextProps.filterConfig;
+    const nextPaginationConfig = nextProps.paginationConfig;
+
+    if (filterConfig !== nextFilterConfig || paginationConfig !== nextPaginationConfig) {
+      this.reloadArticles(nextFilterConfig, nextPaginationConfig);
+    }    
   }
 
-  reloadArticles() {
+  reloadArticles(filterConfig, paginationConfig) {
     this.setState({
       isLoading: true
     });
     setTimeout(() => {
       this.setState({
         articles: getArticles(
-          this.state.paginationConfig.skip,
-          this.state.paginationConfig.top,
-          this.state.filterConfig
+          paginationConfig.skip,
+          paginationConfig.top,
+          filterConfig
         ),
         isLoading: false
       });
     }, 1000);
   }
 
-  handlePaginationUpdate(newPaginationConfig) {
-    this.setState({
-      paginationConfig: newPaginationConfig
-    });
-  }
-
-  handleFilterUpdate(newFilterConfig) {
-    this.setState({
-      filterConfig: newFilterConfig
-    });
-  }
-
   isArticlesLoaded() {
-    return !this.state.isLoading
+    return !this.state.isLoading;
   }
 
   render() {
-    const { articles, authors } = this.state;
+    const { articles } = this.state;
     return (
       <div>
-        <Filter
-          authors={authors}
-          config={this.state.filterConfig}
-          onUpdate={this.handleFilterUpdate}
-        />
+        <Filter />
         <Loader condition={this.isArticlesLoaded}>
           <ArticleList articles={articles} />
         </Loader>
-        <Pagination
-          config={this.state.paginationConfig}
-          onUpdate={this.handlePaginationUpdate}
-        />
+        <Pagination />
       </div>
     );
   }
 }
 
-export default ArticleListPage;
+const mapStateToProps = state => ({
+  filterConfig: state.filterConfig,
+  paginationConfig: state.paginationConfig
+});
+
+export default connect(mapStateToProps)(ArticleListPage);

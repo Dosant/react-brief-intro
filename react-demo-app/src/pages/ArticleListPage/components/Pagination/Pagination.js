@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { changePagination } from '../../../../actionCreators';
 
 class Pagination extends Component {
   constructor(props) {
@@ -8,10 +10,10 @@ class Pagination extends Component {
   }
 
   handleShowMore() {
-    this.props.onUpdate({
-      skip: this.props.config.skip,
-      top: this.props.config.top + 3,
-    })
+    this.props.handleShowMore({
+      skip: this.props.paginationConfig.skip,
+      top: this.props.paginationConfig.top + 3
+    });
   }
 
   render() {
@@ -23,4 +25,14 @@ class Pagination extends Component {
   }
 }
 
-export default Pagination;
+const mapStateToProps = state => ({ paginationConfig: state.paginationConfig });
+
+const mapDispatchToProps = dispatch => {
+  return {
+    handleShowMore: newPagination => {
+      dispatch(changePagination(newPagination));
+    }
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Pagination);

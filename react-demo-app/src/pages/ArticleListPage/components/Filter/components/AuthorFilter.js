@@ -8,7 +8,7 @@ class AuthorFilter extends Component {
 
   handleAuthorChange(evt) {
     const authorValue = evt.target.value;
-    this.props.onChange(authorValue !== 'all' ? authorValue : undefined);  
+    this.props.onChange(authorValue);  
   }
 
   render() {
@@ -16,7 +16,7 @@ class AuthorFilter extends Component {
     return (
       <div className="filter-item filter-author">
         <span>Фильтр по автору:</span>
-        <select name="author" defaultValue={false} onChange={this.handleAuthorChange}>
+        <select name="author" value={this.props.currentAuthor} onChange={this.handleAuthorChange}>
           <option value="all">Все</option>
           {authors.map(author =>
             <option value={author} key={author}>
