@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getArticles } from '../../services/data';
+import { fetchArticleList } from '../../actionCreators';
 
 import ArticleList from './components/ArticleList/ArticleList';
 import Filter from './components/Filter/Filter';
@@ -8,21 +8,8 @@ import Pagination from './components/Pagination/Pagination';
 import Loader from '../../components/Loader';
 
 class ArticleListPage extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isLoading: true,
-      articles: []
-    };
-
-    this.isArticlesLoaded = this.isArticlesLoaded.bind(this);
-  }
-
   componentDidMount() {
-    debugger;
-    const filterConfig = this.props.filterConfig;
-    const paginationConfig = this.props.paginationConfig;
-    this.reloadArticles(filterConfig, paginationConfig);
+    this.props.fetchArticleList();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -32,38 +19,25 @@ class ArticleListPage extends Component {
     const nextFilterConfig = nextProps.filterConfig;
     const nextPaginationConfig = nextProps.paginationConfig;
 
-    if (filterConfig !== nextFilterConfig || paginationConfig !== nextPaginationConfig) {
-      this.reloadArticles(nextFilterConfig, nextPaginationConfig);
-    }    
+    if (
+      filterConfig !== nextFilterConfig ||
+      paginationConfig !== nextPaginationConfig
+    ) {
+      this.props.fetchArticleList();
+    }
   }
 
-  reloadArticles(filterConfig, paginationConfig) {
-    this.setState({
-      isLoading: true
-    });
-    setTimeout(() => {
-      this.setState({
-        articles: getArticles(
-          paginationConfig.skip,
-          paginationConfig.top,
-          filterConfig
-        ),
-        isLoading: false
-      });
-    }, 1000);
-  }
-
-  isArticlesLoaded() {
-    return !this.state.isLoading;
-  }
+  isArticleListLoaded = () => {
+    return this.props.articleList && !this.props.articleList.isLoading;
+  };
 
   render() {
-    const { articles } = this.state;
+    const { articleList } = this.props;
     return (
       <div>
         <Filter />
-        <Loader condition={this.isArticlesLoaded}>
-          <ArticleList articles={articles} />
+        <Loader condition={this.isArticleListLoaded}>
+          <ArticleList articles={articleList.articles} />
         </Loader>
         <Pagination />
       </div>
@@ -73,7 +47,16 @@ class ArticleListPage extends Component {
 
 const mapStateToProps = state => ({
   filterConfig: state.filterConfig,
-  paginationConfig: state.paginationConfig
+  paginationConfig: state.paginationConfig,
+  articleList: state.articleList
 });
 
-export default connect(mapStateToProps)(ArticleListPage);
+const mapDispatchToProps = dispatch => {
+  return {
+    fetchArticleList: () => {
+      dispatch(fetchArticleList());
+    }
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ArticleListPage);

@@ -1,35 +1,14 @@
 import React, { Component } from 'react';
-import { getArticleById } from '../../services/data';
+import {connect} from 'react-redux';
 import Article from './components/Article';
 import Loader from '../../components/Loader';
+import { fetchArticleIfNeeded } from '../../actionCreators';
 
 class ArticlePage extends Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            article: null,
-            isLoading: true            
-        }
-
-        this.isArticleLoaded = this.isArticleLoaded.bind(this);
-    }
-
     loadArticle(id) {
-        this.setState({
-            isLoading: true
-        });
-        setTimeout(() => {
-            const article = getArticleById(id)
-            this.setState({
-                article,
-                isLoading: false
-            });            
-        }, 1000);
-    }
-
-    isArticleLoaded() {
-        return !this.state.isLoading;
+        if (this.props.article && !this.props.article.isLoading) {
+            this.props.fetchArticleIfNeeded(id);
+        }
     }
 
     componentDidMount() {
@@ -48,11 +27,27 @@ class ArticlePage extends Component {
 
     render() {
         return (
-            <Loader condition={this.isArticleLoaded}>
-                <Article article={this.state.article} />
+            <Loader condition={() => !this.props.article.isLoading}>
+                <Article article={this.props.article} />
             </Loader>
         );
     }
 }
 
-export default ArticlePage;
+
+const mapStateToProps = (state, ownProps) => {
+    const articleId = ownProps.match.params.id;
+    return {
+        article: state.articles[articleId] || {}
+    } 
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        fetchArticleIfNeeded: (id) => {
+            dispatch(fetchArticleIfNeeded(id));
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ArticlePage);

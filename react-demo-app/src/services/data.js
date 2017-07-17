@@ -162,8 +162,13 @@ function filterArticles(articles, filterConfig) {
   }
 }
 
-export function getArticles(skip = 0, top = 3, filterConfig = {}) {  
-  return filterArticles(articlesStorage, filterConfig).slice(skip, skip + top);
+export function getArticles(skip = 0, top = 3, filterConfig = {}) { 
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      const articles = filterArticles(articlesStorage, filterConfig).slice(skip, skip + top);
+      resolve(articles);
+    }, 1000);    
+  });   
 }
 
 export function getArticlesCount(filterConfig) {
@@ -171,7 +176,12 @@ export function getArticlesCount(filterConfig) {
 }
 
 export function getArticleById(id) {
-  return articlesStorage.find(article => article.id === id);
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      const article = articlesStorage.find(article => article.id === id);
+      resolve(article);
+    }, 1000);    
+  });
 }
 
 export function getAuthors() {
